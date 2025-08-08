@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  Client    Client?
+  Business  Business?
+}
+
+model Client {
+  id      Int       @id @default(autoincrement())
+  user    User      @relation(fields: [userId], references: [id])
+  userId  Int       @unique
+  Project Project[]
+}
+
+model Business {
+  id              Int               @id @default(autoincrement())
+  user            User              @relation(fields: [userId], references: [id])
+  userId          Int               @unique
+  Project         Project[]
+  BusinessService BusinessService[]
+}
+
+model ProjectStatus {
+  id      Int       @id @default(autoincrement())
+  status  String    @unique
+  Project Project[]
+}
+
+model Project {
+  id          Int           @id @default(autoincrement())
+  client      Client        @relation(fields: [clientId], references: [id])
+  clientId    Int
+  business    Business      @relation(fields: [businessId], references: [id])
+  businessId  Int
+  status      ProjectStatus @relation(fields: [statusId], references: [id])
+  statusId    Int
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime?
+  completedAt DateTime?
+  ProjectFile ProjectFile[]
+}
+
+model FileType {
+  id          Int           @id @default(autoincrement())
+  type        String        @unique
+  ProjectFile ProjectFile[]
+}
+
+model ProjectFile {
+  id        Int      @id @default(autoincrement())
+  name      String
+  project   Project  @relation(fields: [projectId], references: [id])
+  projectId Int
+  fileType  FileType @relation(fields: [typeId], references: [id])
+  typeId    Int
+  url       String   @unique
+  createdAt DateTime @default(now())
+}
+
+model Service {
+  id              Int               @id @default(autoincrement())
+  service         String            @unique
+  BusinessService BusinessService[]
+}
+
+model BusinessService {
+  business   Business @relation(fields: [businessId], references: [id])
+  businessId Int      @unique
+  service    Service  @relation(fields: [serviceId], references: [id])
+  serviceId  Int
+}
