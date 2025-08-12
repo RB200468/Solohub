@@ -1,7 +1,8 @@
 import app from './app.ts';
 import prisma from './prisma.ts';
+import config from './config/config.ts'
 
-const PORT = process.env.PORT || 3000;
+const PORT = config.port;
 const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
