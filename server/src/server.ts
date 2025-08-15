@@ -1,6 +1,7 @@
-import app from './app.ts';
-import prisma from './prisma.ts';
-import config from './config/config.ts'
+import app from './app';
+import prisma from './prisma';
+import config from './config/config'
+
 
 const PORT = config.port;
 const server = app.listen(PORT, () => {
