@@ -1,12 +1,12 @@
 import {Router, Request, Response} from "express"
 import prisma from '../prisma';
 
-const clientRouter = Router();
+const businessRouter = Router();
 
 
-// Get All Clients
-clientRouter.get('/all', async (req:Request, res:Response) => {
-    const clients = await prisma.client.findMany({
+// Get All Businesses
+businessRouter.get('/all', async (req:Request, res:Response) => {
+    const businesses = await prisma.business.findMany({
         select: {
             id: true,
             user: {
@@ -14,33 +14,33 @@ clientRouter.get('/all', async (req:Request, res:Response) => {
             }
         }
     });
-    res.status(200).json(clients);
+    res.status(200).json(businesses);
 });
 
 
-// Get Client
-clientRouter.get('/:id', async (req:Request, res:Response) => {
+// Get Business
+businessRouter.get('/:id', async (req:Request, res:Response) => {
     const {id} = req.params;
-    const client = await prisma.client.findFirst({
+    const business = await prisma.business.findFirst({
         where: {
             id: Number(id)
         }
     });
 
-    if (!client) {
+    if (!business) {
         return res.status(404).json({
-            message: "Client not found"
+            message: "Business not found"
         })
     }
 
-    res.status(200).json(client);
+    res.status(200).json(business);
 });
 
 
-// Create Client
-clientRouter.post('/', async (req:Request, res:Response) => {
+// Create Business
+businessRouter.post('/', async (req:Request, res:Response) => {
     const { name, email, password } = req.body
-    const newClient = await prisma.client.create({
+    const newBusiness = await prisma.business.create({
         data : {
             user : {
                 create: {
@@ -55,16 +55,16 @@ clientRouter.post('/', async (req:Request, res:Response) => {
         }
     });
     res.status(201).json({
-        message: "Successfully created client"
+        message: "Successfully created business"
     })
 });
 
 
-// Delete Client
-clientRouter.delete('/:id', async (req:Request,res:Response) =>{
+// Delete Business
+businessRouter.delete('/:id', async (req:Request,res:Response) =>{
     const {id} = req.params;
 
-    const client = await prisma.client.findUnique({
+    const business = await prisma.business.findUnique({
         where:{
             id: Number(id)
         },
@@ -73,22 +73,22 @@ clientRouter.delete('/:id', async (req:Request,res:Response) =>{
         }
     });
 
-    if (!client) {
+    if (!business) {
         return res.status(404).json({
-            message: "Client not found"
+            message: "Business not found"
         })
     };
 
     await prisma.user.delete({
         where: {
-            id: client.userId
+            id: business.userId
         }
     });
 
     res.status(200).json({
-        message:"Successfully deleted client"
+        message:"Successfully deleted business"
     });
 });
 
 
-export default clientRouter;
+export default businessRouter;

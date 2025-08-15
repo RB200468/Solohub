@@ -3,6 +3,7 @@ import userRouter from './routes/userRouter'
 import infoRouter from './routes/infoRouter'
 import errorHandler from "./middlewares/errorHandler"
 import clientRouter from './routes/clientRouter';
+import businessRouter from './routes/businessRouter';
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.use(express.json());
 app.use('/info',infoRouter);
 app.use('/user',userRouter);
 app.use('/client',clientRouter);
+app.use('/business',businessRouter);
 
 // Handle Errors
 app.use(errorHandler)
