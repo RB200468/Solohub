@@ -2,6 +2,7 @@ import app from './app';
 import prisma from './prisma';
 import config from './config/config'
 
+
 const PORT = config.port;
 const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
