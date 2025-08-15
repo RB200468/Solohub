@@ -20,14 +20,14 @@ model User {
 
 model Client {
   id      Int       @id @default(autoincrement())
-  user    User      @relation(fields: [userId], references: [id])
+  user    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId  Int       @unique
   Project Project[]
 }
 
 model Business {
   id              Int               @id @default(autoincrement())
-  user            User              @relation(fields: [userId], references: [id])
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId          Int               @unique
   Project         Project[]
   BusinessService BusinessService[]
@@ -62,9 +62,9 @@ model FileType {
 model ProjectFile {
   id        Int      @id @default(autoincrement())
   name      String
-  project   Project  @relation(fields: [projectId], references: [id])
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId Int
-  fileType  FileType @relation(fields: [typeId], references: [id])
+  fileType  FileType @relation(fields: [typeId], references: [id], onDelete: Cascade)
   typeId    Int
   url       String   @unique
   createdAt DateTime @default(now())
@@ -77,8 +77,8 @@ model Service {
 }
 
 model BusinessService {
-  business   Business @relation(fields: [businessId], references: [id])
+  business   Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
   businessId Int      @unique
-  service    Service  @relation(fields: [serviceId], references: [id])
+  service    Service  @relation(fields: [serviceId], references: [id], onDelete: Cascade)
   serviceId  Int
 }
