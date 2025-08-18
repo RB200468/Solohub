@@ -1,6 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './utilities.css'
-import Sidebar from './components/sidebar';
+import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Content from './components/Content';
 
