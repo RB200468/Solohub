@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import userRouter from './routes/userRouter'
 import infoRouter from './routes/infoRouter'
 import errorHandler from "./middlewares/errorHandler"
@@ -9,6 +10,8 @@ const app = express();
 
 // Parse JSON
 app.use(express.json());
+app.use(cors());
+
 
 // Routers
 app.use('/info',infoRouter);
