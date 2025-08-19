@@ -33,7 +33,12 @@ function UsersList({}: Props) {
         fetchUsers();
     }, []);
 
-    if (loading) return <p>loading...</p>;
+    if (loading) return (
+        <div className="spinner-border spinner-border-sm" role="status">
+            <span className="visually-hidden">Loading...</span>
+        </div>
+    );
+
     if (error) return <p>{error}</p>;
 
     return (
