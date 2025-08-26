@@ -1,10 +1,12 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 type Props = {
     isCollapsed: boolean;
+    setDisplayedContent: (newContent: string) => void;
 }
 
-function Sidebar({isCollapsed}: Props) {
+function Sidebar({isCollapsed, setDisplayedContent}: Props) {
+  console.log(isCollapsed, setDisplayedContent);
   return (
     <div className={`bg-custom-white text-black d-flex justify-content-center align-items-center g-0 d-none d-md-flex sticky-top ${
         isCollapsed ? "col-1" : "col-2"
@@ -21,8 +23,8 @@ function Sidebar({isCollapsed}: Props) {
                 style={{ flex: "1 0 90%" }}
             >
                 <ul className='list-group'>
-                    <li className='list-group-item'>First item</li>
-                    <li className='list-group-item'>Second item</li>
+                    <li className='list-group-item' onClick={() => {setDisplayedContent('home')}} style={{cursor: "pointer"}}>Home</li>
+                    <li className='list-group-item' onClick={() => {setDisplayedContent('user-list')}} style={{cursor: "pointer"}}>User List</li>
                     <li className='list-group-item'>Third item</li>
                 </ul>
             </div>

@@ -10,14 +10,21 @@ type Props = {}
 
 function App({}: Props) {
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
+  const [displayedContent, setDisplayedContent] = useState<string>('home');
+
+  const handleContentChange = (newContent: string) => {
+    setDisplayedContent(newContent);
+  };
+
+  console.log(`setIsSidebarCollapsed,${setIsSidebarCollapsed} setDisplayedContent:${setDisplayedContent}`);
 
   return (
     <div className="container-fluid vh-100 vw-100 g-0">
       <div className="row h-100 g-0">
-        <Sidebar isCollapsed={isSidebarCollapsed}/>
+        <Sidebar isCollapsed={isSidebarCollapsed} setDisplayedContent={handleContentChange}/>
         <div className="col-12 col-md bg-custom-white d-flex g-0 h-100 w-100 flex-column">
           <Header toggleSidebar={() => setIsSidebarCollapsed(prev => !prev)}/>
-          <Content/>
+          <Content displayedContent={displayedContent}/>
         </div>
       </div>
     </div>
