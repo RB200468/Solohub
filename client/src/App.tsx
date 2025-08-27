@@ -3,19 +3,28 @@ import './utilities.css'
 import Sidebar from './components/Sidebar';
 import Header from './components/Header';
 import Content from './components/Content';
+import {useState} from 'react';
+
 
 type Props = {}
 
 function App({}: Props) {
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false);
+  const [displayedContent, setDisplayedContent] = useState<string>('home');
+
+  const handleContentChange = (newContent: string) => {
+    setDisplayedContent(newContent);
+  };
+
+  console.log(`setIsSidebarCollapsed,${setIsSidebarCollapsed} setDisplayedContent:${setDisplayedContent}`);
+
   return (
-    <div className="container-fluid vh-100 vw-100">
-      <div className="row h-100">
-        <Sidebar/>
-        <div className="col-10 bg-custom-white d-flex justify-content-center align-items-center g-0">
-          <div className="row h-100 w-100 flex-column">
-            <Header/>
-            <Content/>
-          </div>
+    <div className="container-fluid vh-100 vw-100 g-0">
+      <div className="row h-100 g-0">
+        <Sidebar isCollapsed={isSidebarCollapsed} setDisplayedContent={handleContentChange}/>
+        <div className="col-12 col-md bg-custom-white d-flex g-0 h-100 w-100 flex-column">
+          <Header toggleSidebar={() => setIsSidebarCollapsed(prev => !prev)}/>
+          <Content displayedContent={displayedContent}/>
         </div>
       </div>
     </div>
